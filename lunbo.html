@@ -111,10 +111,13 @@
 			ul.style.transition="transform 1s";
 			ul.style.transform='translate3d('+(-index*kw)+'px,0,0)';
 			setTimeout(function(){
-				index = 0;
 				ul.style.transition="";
+				index = 0;
 				ul.style.transform='translate3d('+(-index*kw)+'px,0,0)'
-			},1000)
+			},1000);
+		}else if(index==0){
+			ul.style.transition="";
+			ul.style.transform='translate3d('+(-index*kw)+'px,0,0)';
 		}else{
 			ul.style.transition="transform 1s";
 			ul.style.transform='translate3d('+(-index*kw)+'px,0,0)';
