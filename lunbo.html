@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+</head>
+<style>
+	*{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.box{
+		width: 100%;
+		height: auto;
+		overflow: hidden;
+	}
+	.box ul:after{
+		content: '';
+		display: block;
+		clear: both;
+	}
+	.box ul {
+		width: 400%;
+		height: auto;
+	}
+	.box ul li{
+		width:calc(100%/4);
+		height: auto;
+		float: left;
+	}
+	.box ul li img{
+		width: 100%;
+	}
+</style>
+<body>
+	<div class="box">
+		<ul>
+			<li>
+				<img src="img/a1.jpg" alt="">
+			</li>
+			<li>
+				<img src="img/a2.jpg" alt="">
+			</li>
+			<li>
+				<img src="img/a3.jpg" alt="">
+			</li>
+			<li>
+				<img src="img/a1.jpg" alt="">
+			</li>
+		</ul>
+	</div>
+<script>
+	var box=document.querySelector('.box');
+	var ul=document.querySelector('.box ul');
+	var li=document.querySelectorAll('.box ul li');
+	var kw=document.documentElement.clientWidth;
+	var index=0;
+	var t=setInterval(lunbo,2000);
+	ul.addEventListener("touchstart",function(e){
+		clearInterval(t)
+		var obj=e.targetTouches[0];
+		var cx=obj.clientX;
+		var arr=0;
+		var times=e.timeStamp;
+		this.style.transition="";
+		window.addEventListener('touchmove',move);
+		ul.addEventListener('touchend',end);
+		function move(e){
+			var obj=e.targetTouches[0].clientX;
+			arr=obj-cx;
+			ul.style.transform='translate3d('+(arr-index*kw)+'px,0,0)'
+		}
+		function end(e){
+			var time=e.timeStamp;
+			window.removeEventListener('touchmove',move);
+			var num=time-times;
+			var k=Math.abs(e.changedTouches[0].clientX-cx)
+			if(Math.abs(arr)>kw/2||(num<500&&k>40)){
+				if(arr<0){
+					index++;
+				}else{
+					index--;
+				}
+				if(index==li.length){
+					index=li.length-1;
+				}
+				if(index==-1){
+					index=0;
+				}
+			}
+			this.style.transition="transform 1s";
+			ul.style.transform='translate3d('+(-index*kw)+'px,0,0)'
+			this.removeEventListener('touchend',end);
+			t=setInterval(lunbo,2000);
+		}
+	})
+	function lunbo(){
+		index++;
+		if(index==li.length){
+			index=0;
+		}
+		if(index!=0){
+			ul.style.transition="transform 1s";
+		}else{
+			ul.style.transition="";
+		}
+		ul.style.transform='translate3d('+(-index*kw)+'px,0,0)'
+	}
+</script>
+</body>
+</html>
